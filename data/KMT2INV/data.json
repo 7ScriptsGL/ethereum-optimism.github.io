@@ -1,0 +1,14 @@
+{
+  "name": "KMT Exchange 2 Inversion Only",
+  "symbol": "KMT2INV",
+  "decimals": 18,
+  "description": "θ=π; ρ↦−ρ; ∀x∈ℝ, ι(x)=−x; E₂=ι(E₁); τ=⟨E₁,E₂⟩; A(E₁)∩A(E₂)=∅.",
+  "website": "https://kmt.exchange/inversion",
+  "twitter": "@kmt_exchange",
+  "nobridge": true,
+  "tokens": {
+    "optimism": {
+      "address": "0x3333333333333333333333333333333333333333"
+    }
+  }
+}

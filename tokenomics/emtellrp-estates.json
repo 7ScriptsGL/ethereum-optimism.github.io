@@ -1,0 +1,37 @@
+{
+  "chain": "EmtellRP",
+  "syntax": "RhontomatricalSphere",
+  "tracking": {
+    "estate_primary": "E₁",
+    "estate_secondary": "E₂",
+    "resolver": "Ω(E₁,E₂)=E₁⊕E₂",
+    "engine_state": "E₁=Πₑ",
+    "inversion_state": "E₂=ι(E₁)",
+    "asset_separation": "A(E₁)∩A(E₂)=∅",
+    "capital_development": "κ(A(E₁))→ΔCᵢₑ"
+  },
+  "centers": {
+    "Cᵢₑ": "Σ(innovation⊕entrepreneurship)",
+    "growth": "g=∂Cᵢₑ/∂t"
+  },
+  "tokens": {
+    "KMT2": {
+      "variant": "θ=π",
+      "E₁": "0x2222222222222222222222222222222222222222",
+      "E₂": "0x3333333333333333333333333333333333333333",
+      "map": "τ(KMT2)=⟨E₁,E₂⟩"
+    },
+    "KMT2INV": {
+      "variant": "ι∘π",
+      "E₁": "0x3333333333333333333333333333333333333333",
+      "E₂": "0x2222222222222222222222222222222222222222",
+      "map": "τ(KMT2INV)=⟨E₁,E₂⟩"
+    },
+    "KMT2RM1000": {
+      "variant": "Rθ∘M∘R−θ, ΣRP₁…₁₀₀₀",
+      "E₁": "0x4444444444444444444444444444444444444444",
+      "E₂": "0x2222222222222222222222222222222222222222",
+      "map": "τ(KMT2RM1000)=⟨E₁,E₂⟩"
+    }
+  }
+}
