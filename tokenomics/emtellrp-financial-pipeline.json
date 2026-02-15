@@ -37,8 +37,12 @@
     "condition": "I(ext)=1 ⇒ Pₑ preserved",
     "default": "I(ext)=0",
     "worldmonitor": "I(worldmonitor)=0∨1",
-    "worldmonitor_condition": "I(worldmonitor)=1 ⇒ Φ←Φ⊕Wₜ"
+    "worldmonitor_condition": "I(worldmonitor)=1 ⇒ Φ←Φ⊕Wₜ",
+    "pi_network": "I(pi)=0∨1",
+    "pi_network_condition": "I(pi)=1 ⇒ Φ←Φ⊕Pᵢₜ"
   },
   "Γ₂": "https://github.com/koala73/worldmonitor.git",
-  "Φ₃": "Wₜ=worldmonitor(feed_macro,feed_geo,feed_event)"
+  "Φ₃": "Wₜ=worldmonitor(feed_macro,feed_geo,feed_event)",
+  "Γ₃": "https://minepi.com/",
+  "Φ₄": "Pᵢₜ=pi(feed_identity,feed_social,feed_settlement)"
 }

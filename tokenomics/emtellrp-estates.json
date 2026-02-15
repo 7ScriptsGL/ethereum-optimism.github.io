@@ -11,7 +11,8 @@
     "capital_development": "κ(A(E₁))→ΔCᵢₑ",
     "runtime_guard": "χ(E₁,E₂)=Vₛ(τ(E₁,E₂))",
     "portfolio_coupling": "Π(E₁)→κ(A(E₁))→ΔCᵢₑ",
-    "worldmonitor_coupling": "Wₜ⇒Φ⇒Μ⇒Π"
+    "worldmonitor_coupling": "Wₜ⇒Φ⇒Μ⇒Π",
+    "pi_network_coupling": "Πᵢₙₑₜ⇒Φ⇒Μ⇒Π"
   },
   "centers": {
     "Cᵢₑ": "Σ(innovation⊕entrepreneurship)",
@@ -63,6 +64,9 @@
     "integration_condition": "I(ext)=1 ⇒ Pₑ preserved",
     "worldmonitor_source": "https://github.com/koala73/worldmonitor.git",
     "worldmonitor_mode": "I(worldmonitor)=0∨1",
-    "worldmonitor_condition": "I(worldmonitor)=1 ⇒ Φ←Φ⊕Wₜ"
+    "worldmonitor_condition": "I(worldmonitor)=1 ⇒ Φ←Φ⊕Wₜ",
+    "pi_network_mode": "I(pi)=0∨1",
+    "pi_network_condition": "I(pi)=1 ⇒ Φ←Φ⊕Pᵢₜ",
+    "pi_network_scope": "Pᵢₜ=pi(feed_identity,feed_social,feed_settlement)"
   }
 }
