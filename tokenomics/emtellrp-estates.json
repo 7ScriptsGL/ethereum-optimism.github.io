@@ -1,0 +1,55 @@
+{
+  "chain": "EmtellRP",
+  "syntax": "RhontomatricalSphere",
+  "tracking": {
+    "estate_primary": "E₁",
+    "estate_secondary": "E₂",
+    "resolver": "Ω(E₁,E₂)=E₁⊕E₂",
+    "engine_state": "E₁=Πₑ",
+    "inversion_state": "E₂=ι(E₁)",
+    "asset_separation": "A(E₁)∩A(E₂)=∅",
+    "capital_development": "κ(A(E₁))→ΔCᵢₑ",
+    "runtime_guard": "χ(E₁,E₂)=Vₛ(τ(E₁,E₂))",
+    "portfolio_coupling": "Π(E₁)→κ(A(E₁))→ΔCᵢₑ"
+  },
+  "centers": {
+    "Cᵢₑ": "Σ(innovation⊕entrepreneurship)",
+    "growth": "g=∂Cᵢₑ/∂t"
+  },
+  "tokens": {
+    "KMT2": {
+      "variant": "θ=π",
+      "E₁": "0x2222222222222222222222222222222222222222",
+      "E₂": "0x3333333333333333333333333333333333333333",
+      "map": "τ(KMT2)=⟨E₁,E₂⟩",
+      "guard": "χ(E₁,E₂)=1",
+      "estate_flow": "E₁⇒Π⇒κ⇒ΔCᵢₑ ∥ E₂⇒ι-monitor"
+    },
+    "KMT2INV": {
+      "variant": "ι∘π",
+      "E₁": "0x3333333333333333333333333333333333333333",
+      "E₂": "0x2222222222222222222222222222222222222222",
+      "map": "τ(KMT2INV)=⟨E₁,E₂⟩",
+      "guard": "χ(E₁,E₂)=1",
+      "estate_flow": "E₁⇒Π⇒κ⇒ΔCᵢₑ ∥ E₂⇒ι-monitor"
+    },
+    "KMT2RM1000": {
+      "variant": "Rθ∘M∘R−θ, ΣRP₁…₁₀₀₀",
+      "E₁": "0x4444444444444444444444444444444444444444",
+      "E₂": "0x2222222222222222222222222222222222222222",
+      "map": "τ(KMT2RM1000)=⟨E₁,E₂⟩",
+      "guard": "χ(E₁,E₂)=1",
+      "estate_flow": "E₁⇒Π⇒κ⇒ΔCᵢₑ ∥ E₂⇒ι-monitor"
+    }
+  },
+  "system": {
+    "engine": "Ψ₀=EmtellRP∘RhontomatricalSphere",
+    "verification": "Vₛ=DatadogSynthetics",
+    "verification_flow": "Vₛ(τ(E₁,E₂))=1",
+    "synthetics_badge": "https://github.com/7ScriptsGL/Emtell/actions/workflows/datadog-synthetics.yml/badge.svg",
+    "synthetics_workflow": "https://github.com/7ScriptsGL/Emtell/actions/workflows/datadog-synthetics.yml",
+    "financial_pipeline": "Ω=Π∘Μ∘Φ∘Ε∘Χ",
+    "financial_pipeline_ref": "tokenomics/emtellrp-financial-pipeline.json",
+    "financial_pipeline_source": "https://github.com/7ScriptsGL/Financial-Analysis-Pipeline-with-ML-and-Portfolio-Construction-CodeBase.git"
+  }
+}

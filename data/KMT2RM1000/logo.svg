@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-label="KMT2 rotating mirror 1000RP logo">
+  <rect width="256" height="256" fill="#f8f8f8" rx="28"/>
+  <circle cx="128" cy="128" r="74" fill="none" stroke="#111" stroke-width="2"/>
+  <text x="128" y="116" text-anchor="middle" fill="#111" font-size="24" font-family="monospace">Rθ∘M∘R−θ</text>
+  <text x="128" y="148" text-anchor="middle" fill="#444" font-size="16" font-family="monospace">ΣRP₁…₁₀₀₀</text>
+</svg>

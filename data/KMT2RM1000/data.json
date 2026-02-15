@@ -1,0 +1,14 @@
+{
+  "name": "KMT Exchange 2 Rotating Mirror 1000RP",
+  "symbol": "KMT2RM1000",
+  "decimals": 18,
+  "description": "μ=μ∘μ; m(θ)=Rθ∘M∘R−θ; θ∈[0,2π); τ=⟨E₁,E₂⟩; Σᵣₚ₌₁¹⁰⁰⁰ RP=Ω; κ(A(E₁))→ΔCᵢₑ.",
+  "website": "https://kmt.exchange/rm1000",
+  "twitter": "@kmt_exchange",
+  "nobridge": true,
+  "tokens": {
+    "optimism": {
+      "address": "0x4444444444444444444444444444444444444444"
+    }
+  }
+}
