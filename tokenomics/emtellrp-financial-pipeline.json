@@ -35,6 +35,10 @@
   "Ι": {
     "mode": "Ι=optional_external_connectors",
     "condition": "I(ext)=1 ⇒ Pₑ preserved",
-    "default": "I(ext)=0"
-  }
+    "default": "I(ext)=0",
+    "worldmonitor": "I(worldmonitor)=0∨1",
+    "worldmonitor_condition": "I(worldmonitor)=1 ⇒ Φ←Φ⊕Wₜ"
+  },
+  "Γ₂": "https://github.com/koala73/worldmonitor.git",
+  "Φ₃": "Wₜ=worldmonitor(feed_macro,feed_geo,feed_event)"
 }

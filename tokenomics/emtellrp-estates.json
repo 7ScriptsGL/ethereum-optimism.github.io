@@ -10,7 +10,8 @@
     "asset_separation": "A(E₁)∩A(E₂)=∅",
     "capital_development": "κ(A(E₁))→ΔCᵢₑ",
     "runtime_guard": "χ(E₁,E₂)=Vₛ(τ(E₁,E₂))",
-    "portfolio_coupling": "Π(E₁)→κ(A(E₁))→ΔCᵢₑ"
+    "portfolio_coupling": "Π(E₁)→κ(A(E₁))→ΔCᵢₑ",
+    "worldmonitor_coupling": "Wₜ⇒Φ⇒Μ⇒Π"
   },
   "centers": {
     "Cᵢₑ": "Σ(innovation⊕entrepreneurship)",
@@ -51,7 +52,7 @@
     "verification_flow": "Vₛ(τ(E₁,E₂))=1",
     "synthetics_badge": "https://github.com/7ScriptsGL/Emtell/actions/workflows/datadog-synthetics.yml/badge.svg",
     "synthetics_workflow": "https://github.com/7ScriptsGL/Emtell/actions/workflows/datadog-synthetics.yml",
-    "financial_pipeline": "Ω=Π∘Μ∘Φ∘Ε∘Χ",
+    "financial_pipeline": "Ω=Π∘Μ∘Φ∘Ε∘Ι∘Χ",
     "financial_pipeline_ref": "tokenomics/emtellrp-financial-pipeline.json",
     "financial_pipeline_source": "https://github.com/7ScriptsGL/Financial-Analysis-Pipeline-with-ML-and-Portfolio-Construction-CodeBase.git",
     "proprietary_domain": "Pₑ=EmtellRP_only",
@@ -59,6 +60,9 @@
     "promotion_right": "π(R)=build⊕promote",
     "integration_mode": "Ι=optional_external_connectors",
     "integration_guard": "I(ext)=0∨1",
-    "integration_condition": "I(ext)=1 ⇒ Pₑ preserved"
+    "integration_condition": "I(ext)=1 ⇒ Pₑ preserved",
+    "worldmonitor_source": "https://github.com/koala73/worldmonitor.git",
+    "worldmonitor_mode": "I(worldmonitor)=0∨1",
+    "worldmonitor_condition": "I(worldmonitor)=1 ⇒ Φ←Φ⊕Wₜ"
   }
 }
