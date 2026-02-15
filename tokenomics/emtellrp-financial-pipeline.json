@@ -31,12 +31,10 @@
     "synthetics": "Vₛ=DatadogSynthetics",
     "pass": "χ=1"
   },
-  "Ω": "Ω=Π∘Μ∘Φ∘Ε∘Β∘Χ",
-  "Β": {
-    "quarantine": "Q(Β₄₄)=1",
-    "neutralization": "Ν(Β₄₄)=0",
-    "independence": "Iₑ=1 ∧ ∂Ψ/∂Β₄₄=0",
-    "proprietary": "Pₑ=EmtellRP_only",
-    "rights": "R(data_owner)=build⊕promote"
+  "Ω": "Ω=Π∘Μ∘Φ∘Ε∘Ι∘Χ",
+  "Ι": {
+    "mode": "Ι=optional_external_connectors",
+    "condition": "I(ext)=1 ⇒ Pₑ preserved",
+    "default": "I(ext)=0"
   }
 }
