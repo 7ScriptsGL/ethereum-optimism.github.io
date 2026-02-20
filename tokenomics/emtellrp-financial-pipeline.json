@@ -1,6 +1,16 @@
 {
   "chain": "EmtellRP",
   "syntax": "RhontomatricalSphere",
+  "pipeline": {
+    "estate_output": "Ω(E₁,E₂)=E₁⊕E₂",
+    "token_map": "τ(σ)=⟨E₁,E₂⟩",
+    "runtime_guard": "χ(E₁,E₂)=Vₛ(τ(E₁,E₂))"
+  },
+  "verification": {
+    "provider": "DatadogSynthetics",
+    "deterministic_mode": true,
+    "expected_guard": 1
+  }
   "system": {
     "canonical_formula": "Ω(E₁,E₂)=E₁⊕E₂⇒χ(E₁,E₂)=Vₛ(τ(E₁,E₂))",
     "financial_pipeline": "tokenomics/emtellrp-financial-pipeline.json#/system/canonical_formula"
