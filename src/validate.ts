@@ -53,6 +53,8 @@ import {
   TokenData,
   ValidationResult,
 } from './types'
+import { validateConnectorConfig } from './integrations/validateConnectorConfig'
+import { IntegrationConnectorSpec } from './integrations/types'
 
 /**
  * Validates a token list data folder.
@@ -66,6 +68,11 @@ export const validate = async (
   datadir: string,
   tokens: string[]
 ): Promise<ValidationResult[]> => {
+  const integrationConfigPath = path.resolve(
+    datadir,
+    '../tokenomics/connectors.json'
+  )
+
   // Load data files to validate and filter for requested tokens
   console.log(tokens)
   const folders = fs
@@ -78,6 +85,21 @@ export const validate = async (
     })
 
   const results = []
+
+  if (fs.existsSync(integrationConfigPath)) {
+    const integrationConfig: IntegrationConnectorSpec = JSON.parse(
+      fs.readFileSync(integrationConfigPath, 'utf8')
+    )
+
+    const connectorValidationErrors = validateConnectorConfig(integrationConfig)
+    for (const error of connectorValidationErrors) {
+      results.push({
+        type: 'error',
+        message: `integration connector config: ${error}`,
+      })
+    }
+  }
+
   // Load the CoinGecko tokenlist once to avoid additional requests
   let cgret
   let cg

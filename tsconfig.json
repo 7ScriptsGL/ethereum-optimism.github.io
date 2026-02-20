@@ -26,6 +26,7 @@
     "optimism.tokenlist.json",
     "package.json",
     "src/**/*",
-    "bin/**/*"
+    "bin/**/*",
+    "tokenomics/**/*.json"
   ]
 }
