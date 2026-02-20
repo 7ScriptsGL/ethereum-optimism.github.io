@@ -1,0 +1,8 @@
+{
+  "chain": "EmtellRP",
+  "syntax": "RhontomatricalSphere",
+  "system": {
+    "canonical_formula": "Ω(E₁,E₂)=E₁⊕E₂⇒χ(E₁,E₂)=Vₛ(τ(E₁,E₂))",
+    "financial_pipeline": "tokenomics/emtellrp-financial-pipeline.json#/system/canonical_formula"
+  }
+}

@@ -43,6 +43,7 @@
     "verification": "Vₛ=DatadogSynthetics",
     "verification_flow": "Vₛ(τ(E₁,E₂))=1",
     "synthetics_badge": "https://github.com/7ScriptsGL/Emtell/actions/workflows/datadog-synthetics.yml/badge.svg",
-    "synthetics_workflow": "https://github.com/7ScriptsGL/Emtell/actions/workflows/datadog-synthetics.yml"
+    "synthetics_workflow": "https://github.com/7ScriptsGL/Emtell/actions/workflows/datadog-synthetics.yml",
+    "financial_pipeline": "tokenomics/emtellrp-financial-pipeline.json#/system/canonical_formula"
   }
 }
