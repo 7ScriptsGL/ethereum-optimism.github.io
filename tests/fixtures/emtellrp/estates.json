@@ -1,0 +1,19 @@
+{
+  "chain": "EmtellRP",
+  "syntax": "RhontomatricalSphere",
+  "tracking": {
+    "estate_primary": "E₁",
+    "estate_secondary": "E₂",
+    "resolver": "Ω(E₁,E₂)=E₁⊕E₂",
+    "runtime_guard": "χ(E₁,E₂)=Vₛ(τ(E₁,E₂))"
+  },
+  "tokens": {
+    "KMT2": {
+      "variant": "θ=π",
+      "E₁": "0x2222222222222222222222222222222222222222",
+      "E₂": "0x3333333333333333333333333333333333333333",
+      "map": "τ(KMT2)=⟨E₁,E₂⟩",
+      "guard": "χ(E₁,E₂)=1"
+    }
+  }
+}

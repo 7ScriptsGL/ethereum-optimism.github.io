@@ -1,0 +1,14 @@
+{
+  "chain": "EmtellRP",
+  "syntax": "RhontomatricalSphere",
+  "pipeline": {
+    "estate_output": "Ω(E₁,E₂)=E₁⊕E₂",
+    "token_map": "τ(σ)=⟨E₁,E₂⟩",
+    "runtime_guard": "χ(E₁,E₂)=Vₛ(τ(E₁,E₂))"
+  },
+  "verification": {
+    "provider": "DatadogSynthetics",
+    "deterministic_mode": true,
+    "expected_guard": 1
+  }
+}

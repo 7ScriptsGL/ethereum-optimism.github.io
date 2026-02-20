@@ -3,6 +3,7 @@ import fs from 'fs'
 import { Command } from 'commander'
 
 import { generate } from '../src/generate'
+import { runEmtellRuntime } from '../src/emtellrp'
 import { validate } from '../src/validate'
 import { version } from '../package.json'
 
@@ -71,6 +72,32 @@ program
       // Exit with error code so CI fails
       process.exit(1)
     }
+  })
+
+program
+  .command('emtellrp-run')
+  .description('Run the EmtellRP runtime module')
+  .option(
+    '--estates <estates>',
+    'Path to emtellrp-estates.json',
+    './tokenomics/emtellrp-estates.json'
+  )
+  .option(
+    '--pipeline <pipeline>',
+    'Path to emtellrp-financial-pipeline.json',
+    './tokenomics/emtellrp-financial-pipeline.json'
+  )
+  .option('--outfile <outfile>', 'Optional output file path')
+  .action(async (options) => {
+    const outputs = runEmtellRuntime(options.estates, options.pipeline)
+    const serialized = JSON.stringify(outputs, null, 2)
+
+    if (options.outfile) {
+      fs.writeFileSync(options.outfile, serialized)
+      return
+    }
+
+    console.log(serialized)
   })
 
 program
