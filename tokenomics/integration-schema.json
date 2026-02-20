@@ -1,0 +1,148 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Integration Connector Configuration",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "connectors"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "connectors": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "type",
+          "auth",
+          "dataProvenance",
+          "ownership",
+          "preservation"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 3
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "type": "string",
+            "enum": ["api", "indexer", "bridge", "oracle", "custom"]
+          },
+          "auth": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["model", "credentialsRef"],
+            "properties": {
+              "model": {
+                "type": "string",
+                "enum": ["apiKey", "oauth2", "sigv4", "none"]
+              },
+              "credentialsRef": {
+                "type": "string",
+                "minLength": 1
+              },
+              "scopes": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          },
+          "dataProvenance": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "sourceSystem",
+              "collectedAt",
+              "attestationHash",
+              "ownershipGuaranteed"
+            ],
+            "properties": {
+              "sourceSystem": {
+                "type": "string",
+                "minLength": 1
+              },
+              "collectedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "attestationHash": {
+                "type": "string",
+                "minLength": 1
+              },
+              "ownershipGuaranteed": {
+                "type": "boolean"
+              }
+            }
+          },
+          "ownership": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["owner", "proofType", "proofUri"],
+            "properties": {
+              "owner": {
+                "type": "string",
+                "minLength": 1
+              },
+              "proofType": {
+                "type": "string",
+                "enum": ["signature", "contract", "registry"]
+              },
+              "proofUri": {
+                "type": "string",
+                "format": "uri"
+              }
+            }
+          },
+          "preservation": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["integrityExtension", "rule", "preserved"],
+            "properties": {
+              "integrityExtension": {
+                "type": "integer",
+                "enum": [0, 1]
+              },
+              "rule": {
+                "type": "string",
+                "const": "I(ext)=1 ⇒ Pₑ preserved"
+              },
+              "preserved": {
+                "type": "boolean"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "integrityExtension": {
+                      "const": 1
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "preserved": {
+                      "const": true
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

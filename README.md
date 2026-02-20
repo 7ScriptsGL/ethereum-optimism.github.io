@@ -59,8 +59,16 @@ If your automated checks failed, you can see the reason for the failure by downl
 If you make changes and need to run the validation check again, you will need to wait for a reviewer to approve the checks to run again. However, if you do not want to wait for a reviewer to approve the checks to run again to see if the failures have been resolved, you can run the validation checks locally by running:
 
 ```sh
-npx tsx ./bin/cli.ts validate --datadir ./data --tokens <data folder name (e.g. ETH)>
+npx tsx ./bin/cli.ts validate --datadir ./data --tokens <data folder name (e.g. ETH)> --mode live
 ```
+
+If you need deterministic validation without external connectivity, run fixture mode:
+
+```sh
+pnpm validate:fixtures
+```
+
+`fixtures` mode uses local snapshot-style responses for CoinGecko and RPC-dependent checks so schema validation, formula consistency checks, and token file integrity checks still run in a deterministic way. In CI, `pnpm check:ci` runs these structural checks in fixture mode.
 
 ### Final approval
 

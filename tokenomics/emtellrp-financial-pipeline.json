@@ -5,4 +5,50 @@
     "canonical_formula": "Ω(E₁,E₂)=E₁⊕E₂⇒χ(E₁,E₂)=Vₛ(τ(E₁,E₂))",
     "financial_pipeline": "tokenomics/emtellrp-financial-pipeline.json#/system/canonical_formula"
   }
+  "Ψ": "EmtellRP∘RhontomatricalSphere",
+  "Γ": "https://github.com/7ScriptsGL/Financial-Analysis-Pipeline-with-ML-and-Portfolio-Construction-CodeBase.git",
+  "Φ₀": "Xₜ=[pₜ,vₜ,σₜ,rₜ]",
+  "Φ₁": "𝒩(Xₜ)=(Xₜ-μ)/σ",
+  "Φ₂": "Fₜ=[EMA,RSI,MACD,β,α,Δ²p]",
+  "Μ": {
+    "Μ₁": "ŷₜ₊₁=fθ(Fₜ)",
+    "Μ₂": "qₜ=argmaxᵢ P(yᵢ|Fₜ)",
+    "Μ₃": "εₜ=yₜ-ŷₜ"
+  },
+  "Π": {
+    "objective": "max_w μᵀw-λwᵀΣw",
+    "constraints": "∑wᵢ=1 ∧ wᵢ≥0",
+    "solver": "w*=Σ⁻¹μ/(1ᵀΣ⁻¹μ)"
+  },
+  "ℛ": {
+    "VaR": "VaRα=inf{l:P(L>l)≤1-α}",
+    "CVaR": "CVaRα=E[L|L≥VaRα]",
+    "drawdown": "DDₜ=(P*ₜ-Pₜ)/P*ₜ"
+  },
+  "Ε": {
+    "primary": "E₁=Πₑ",
+    "secondary": "E₂=ι(E₁)",
+    "separation": "A(E₁)∩A(E₂)=∅",
+    "allocation": "κ(A(E₁))→ΔCᵢₑ",
+    "mapping": "τ=⟨E₁,E₂⟩"
+  },
+  "Χ": {
+    "runtime": "χ(E₁,E₂)=Vₛ(τ(E₁,E₂))",
+    "synthetics": "Vₛ=DatadogSynthetics",
+    "pass": "χ=1"
+  },
+  "Ω": "Ω=Π∘Μ∘Φ∘Ε∘Ι∘Χ",
+  "Ι": {
+    "mode": "Ι=optional_external_connectors",
+    "condition": "I(ext)=1 ⇒ Pₑ preserved",
+    "default": "I(ext)=0",
+    "worldmonitor": "I(worldmonitor)=0∨1",
+    "worldmonitor_condition": "I(worldmonitor)=1 ⇒ Φ←Φ⊕Wₜ",
+    "pi_network": "I(pi)=0∨1",
+    "pi_network_condition": "I(pi)=1 ⇒ Φ←Φ⊕Pᵢₜ"
+  },
+  "Γ₂": "https://github.com/koala73/worldmonitor.git",
+  "Φ₃": "Wₜ=worldmonitor(feed_macro,feed_geo,feed_event)",
+  "Γ₃": "https://minepi.com/",
+  "Φ₄": "Pᵢₜ=pi(feed_identity,feed_social,feed_settlement)"
 }

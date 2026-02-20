@@ -26,7 +26,9 @@ const BASE_URL = 'https://ethereum-optimism.github.io'
  */
 export const generate = (datadir: string) => {
   return fs
-    .readdirSync(datadir)
+    .readdirSync(datadir, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
     .sort((a, b) => {
       return a.toLowerCase().localeCompare(b.toLowerCase())
     })

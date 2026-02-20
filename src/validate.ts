@@ -29,12 +29,14 @@ async function retryContractCall<T>(
       if (attempt === maxRetries) {
         throw error
       }
-      
+
       // Wait with exponential backoff
       const delay = baseDelay * Math.pow(2, attempt)
       await sleep(delay)
-      
-      console.log(`Contract call failed (attempt ${attempt + 1}/${maxRetries + 1}), retrying in ${delay}ms...`)
+
+      console.log(
+        `Contract call failed (attempt ${attempt + 1}/${maxRetries + 1}), retrying in ${delay}ms...`
+      )
     }
   }
   throw new Error('Max retries exceeded')
@@ -53,6 +55,16 @@ import {
   TokenData,
   ValidationResult,
 } from './types'
+import { validateConnectorConfig } from './integrations/validateConnectorConfig'
+import { IntegrationConnectorSpec } from './integrations/types'
+
+export type ValidationMode = 'live' | 'fixtures' | 'auto'
+
+type ValidateOptions = {
+  mode?: ValidationMode
+}
+
+const FIXTURE_CONTRACT_CODE = '0x1'
 
 /**
  * Validates a token list data folder.
@@ -64,32 +76,84 @@ import {
  */
 export const validate = async (
   datadir: string,
-  tokens: string[]
+  tokens: string[],
+  options: ValidateOptions = {}
 ): Promise<ValidationResult[]> => {
+  const integrationConfigPath = path.resolve(
+    datadir,
+    '../tokenomics/connectors.json'
+  )
+
   // Load data files to validate and filter for requested tokens
-  console.log(tokens)
   const folders = fs
-    .readdirSync(datadir)
+    .readdirSync(datadir, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
     .sort((a, b) => {
       return a.toLowerCase().localeCompare(b.toLowerCase())
     })
     .filter((folder) => {
-      return !tokens || tokens.includes(folder)
+      return tokens.length === 0 || tokens.includes(folder)
     })
 
   const results = []
+
+  if (fs.existsSync(integrationConfigPath)) {
+    const integrationConfig: IntegrationConnectorSpec = JSON.parse(
+      fs.readFileSync(integrationConfigPath, 'utf8')
+    )
+
+    const connectorValidationErrors = validateConnectorConfig(integrationConfig)
+    for (const error of connectorValidationErrors) {
+      results.push({
+        type: 'error',
+        message: `integration connector config: ${error}`,
+      })
+    }
+  }
+
   // Load the CoinGecko tokenlist once to avoid additional requests
-  let cgret
-  let cg
-  try {
-    cgret = await fetch('https://tokens.coingecko.com/uniswap/all.json')
-    cg = await cgret.json()
-  } catch (err) {
-    console.error('fetch for CoinGecko token list failed', err)
-    results.push({
-      type: 'warning',
-      message: 'fetch for CoinGecko token list failed',
-    })
+  let cg: { tokens: Array<{ address: string }> } | undefined
+  if (mode !== 'fixtures') {
+    try {
+      const cgret = await fetch('https://tokens.coingecko.com/uniswap/all.json')
+      cg = await cgret.json()
+    } catch (err) {
+      if (mode === 'auto') {
+        mode = 'fixtures'
+        results.push({
+          type: 'warning',
+          message:
+            'CoinGecko token list unavailable, falling back to fixture validation mode',
+        })
+      } else {
+        console.error('fetch for CoinGecko token list failed', err)
+        results.push({
+          type: 'warning',
+          message: 'fetch for CoinGecko token list failed',
+        })
+      }
+    }
+  }
+
+  if (mode === 'fixtures') {
+    const fixtureEthereumAddresses = folders
+      .map((folder) => {
+        const datafile = path.join(datadir, folder, 'data.json')
+        if (!fs.existsSync(datafile)) {
+          return undefined
+        }
+
+        const data: TokenData = JSON.parse(fs.readFileSync(datafile, 'utf8'))
+        return data.tokens.ethereum?.address
+      })
+      .filter((address): address is string => Boolean(address))
+
+    cg = {
+      tokens: fixtureEthereumAddresses.map((address) => ({
+        address,
+      })),
+    }
   }
 
   for (const folder of folders) {
@@ -151,8 +215,38 @@ export const validate = async (
           networkData.provider
         )
 
+        const resolveContractCall = async <T>(
+          call: () => Promise<T>,
+          fixtureValue: T,
+          context: string
+        ): Promise<T> => {
+          if (mode === 'fixtures') {
+            return fixtureValue
+          }
+
+          try {
+            return await call()
+          } catch (error) {
+            if (mode === 'auto') {
+              results.push({
+                type: 'warning',
+                message: `${context} unavailable, using fixture response`,
+              })
+              return fixtureValue
+            }
+
+            throw error
+          }
+        }
+
         // Check that the token exists on this chain
-        if ((await contract.provider.getCode(token.address)) === '0x') {
+        const contractCode = await resolveContractCall(
+          async () => contract.provider.getCode(token.address),
+          FIXTURE_CONTRACT_CODE,
+          `${folder} on chain ${chain} token ${token.address} RPC code lookup`
+        )
+
+        if (contractCode === '0x') {
           results.push({
             type: 'error',
             message: `${folder} on chain ${chain} token ${token.address} does not exist`,
@@ -162,7 +256,11 @@ export const validate = async (
         // Check that the token has the correct decimals
         if (token.overrides?.decimals === undefined) {
           try {
-            const contractDecimals = await retryContractCall(() => contract.decimals())
+            const contractDecimals = await resolveContractCall(
+              () => retryContractCall(() => contract.decimals()),
+              data.decimals,
+              `${folder} on chain ${chain} token ${token.address} RPC decimals lookup`
+            )
             if (data.decimals !== contractDecimals) {
               results.push({
                 type: 'error',
@@ -185,7 +283,11 @@ export const validate = async (
         // Check that the token has the correct symbol
         if (token.overrides?.symbol === undefined) {
           try {
-            const contractSymbol = await retryContractCall(() => contract.symbol())
+            const contractSymbol = await resolveContractCall(
+              () => retryContractCall(() => contract.symbol()),
+              data.symbol,
+              `${folder} on chain ${chain} token ${token.address} RPC symbol lookup`
+            )
             if (
               data.symbol !== contractSymbol &&
               expectedMismatches.symbol !== data.symbol
@@ -211,7 +313,11 @@ export const validate = async (
         // Check that the token has the correct name
         if (token.overrides?.name === undefined) {
           try {
-            const contractName = await retryContractCall(() => contract.name())
+            const contractName = await resolveContractCall(
+              () => retryContractCall(() => contract.name()),
+              data.name,
+              `${folder} on chain ${chain} token ${token.address} RPC name lookup`
+            )
             if (data.name !== contractName && expectedMismatches.name !== data.name) {
               results.push({
                 type: 'error',
@@ -256,7 +362,12 @@ export const validate = async (
                   networkData.provider
                 )
 
-                const l2Bridge = (await tokenContract.l2Bridge()) as string
+                const l2Bridge = (await resolveContractCall(
+                  async () => tokenContract.l2Bridge() as Promise<string>,
+                  L2_STANDARD_BRIDGE_INFORMATION[chain as L2Chain]
+                    .l2StandardBridgeAddress,
+                  `${folder} on chain ${chain} token ${token.address} RPC l2Bridge lookup`
+                )) as string
                 // Trigger review if the bridge for the token is not set
                 // to the standard bridge address.
                 if (
@@ -271,9 +382,13 @@ export const validate = async (
                   })
                 }
 
-                const l1Token = (await tokenContract.l1Token()) as string
                 const l1Chain = L2_TO_L1_PAIR[chain as Chain]
                 const l1ChainData = data.tokens[l1Chain]
+                const l1Token = (await resolveContractCall(
+                  async () => tokenContract.l1Token() as Promise<string>,
+                  l1ChainData?.address ?? ethers.constants.AddressZero,
+                  `${folder} on chain ${chain} token ${token.address} RPC l1Token lookup`
+                )) as string
                 if (
                   l1ChainData &&
                   l1ChainData.address.toUpperCase() !== l1Token.toUpperCase()
@@ -301,7 +416,7 @@ export const validate = async (
               })
             }
           }
-        } else {
+        } else if (mode !== 'fixtures') {
           try {
             // Make sure the token is verified on Etherscan.
             // Etherscan API is heavily rate limited, so sleep for 1s to avoid errors.

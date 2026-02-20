@@ -1,0 +1,31 @@
+{
+  "version": "1.0.0",
+  "connectors": [
+    {
+      "id": "oracle-main",
+      "name": "Primary Oracle Connector",
+      "type": "oracle",
+      "auth": {
+        "model": "oauth2",
+        "credentialsRef": "vault://integrations/oracle-main",
+        "scopes": ["read:prices"]
+      },
+      "dataProvenance": {
+        "sourceSystem": "oracle-backend",
+        "collectedAt": "2026-01-10T12:30:00Z",
+        "attestationHash": "0xabc123",
+        "ownershipGuaranteed": true
+      },
+      "ownership": {
+        "owner": "Optimism Foundation",
+        "proofType": "registry",
+        "proofUri": "https://example.com/proofs/oracle-main"
+      },
+      "preservation": {
+        "integrityExtension": 1,
+        "rule": "I(ext)=1 ⇒ Pₑ preserved",
+        "preserved": true
+      }
+    }
+  ]
+}
