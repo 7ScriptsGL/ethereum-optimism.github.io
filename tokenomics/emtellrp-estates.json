@@ -61,6 +61,7 @@
     "verification_flow": "Vₛ(τ(E₁,E₂))=1",
     "synthetics_badge": "https://github.com/7ScriptsGL/Emtell/actions/workflows/datadog-synthetics.yml/badge.svg",
     "synthetics_workflow": "https://github.com/7ScriptsGL/Emtell/actions/workflows/datadog-synthetics.yml",
+    "financial_pipeline": "tokenomics/emtellrp-financial-pipeline.json#/system/canonical_formula"
     "financial_pipeline": "Ω=Π∘Μ∘Φ∘Ε∘Ι∘Χ",
     "financial_pipeline_ref": "tokenomics/emtellrp-financial-pipeline.json",
     "financial_pipeline_source": "https://github.com/7ScriptsGL/Financial-Analysis-Pipeline-with-ML-and-Portfolio-Construction-CodeBase.git",
