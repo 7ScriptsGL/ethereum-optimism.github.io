@@ -55,6 +55,8 @@ import {
   TokenData,
   ValidationResult,
 } from './types'
+import { validateConnectorConfig } from './integrations/validateConnectorConfig'
+import { IntegrationConnectorSpec } from './integrations/types'
 
 export type ValidationMode = 'live' | 'fixtures' | 'auto'
 
@@ -77,7 +79,10 @@ export const validate = async (
   tokens: string[],
   options: ValidateOptions = {}
 ): Promise<ValidationResult[]> => {
-  let mode: ValidationMode = options.mode ?? 'live'
+  const integrationConfigPath = path.resolve(
+    datadir,
+    '../tokenomics/connectors.json'
+  )
 
   // Load data files to validate and filter for requested tokens
   const folders = fs
@@ -92,6 +97,21 @@ export const validate = async (
     })
 
   const results = []
+
+  if (fs.existsSync(integrationConfigPath)) {
+    const integrationConfig: IntegrationConnectorSpec = JSON.parse(
+      fs.readFileSync(integrationConfigPath, 'utf8')
+    )
+
+    const connectorValidationErrors = validateConnectorConfig(integrationConfig)
+    for (const error of connectorValidationErrors) {
+      results.push({
+        type: 'error',
+        message: `integration connector config: ${error}`,
+      })
+    }
+  }
+
   // Load the CoinGecko tokenlist once to avoid additional requests
   let cg: { tokens: Array<{ address: string }> } | undefined
   if (mode !== 'fixtures') {
