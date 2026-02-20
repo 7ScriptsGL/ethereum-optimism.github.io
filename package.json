@@ -45,7 +45,10 @@
     "lint:fix": "eslint --fix .",
     "lint": "pnpm lint:fix && pnpm lint:check",
     "start-bot": "tsx ./src/bot.ts",
-    "typecheck": "tsc -p ./tsconfig.json --noEmit"
+    "typecheck": "tsc -p ./tsconfig.json --noEmit",
+    "validate:fixtures": "tsx ./bin/cli.ts validate --datadir ./data --mode fixtures",
+    "validate:ci": "tsx ./bin/cli.ts validate --datadir ./data --mode auto",
+    "check:ci": "pnpm validate:fixtures && pnpm generate:ci"
   },
   "files": [
     "dist"

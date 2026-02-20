@@ -9,6 +9,10 @@
     "inversion_state": "E₂=ι(E₁)",
     "asset_separation": "A(E₁)∩A(E₂)=∅",
     "capital_development": "κ(A(E₁))→ΔCᵢₑ",
+    "runtime_guard": "χ(E₁,E₂)=Vₛ(τ(E₁,E₂))",
+    "portfolio_coupling": "Π(E₁)→κ(A(E₁))→ΔCᵢₑ",
+    "worldmonitor_coupling": "Wₜ⇒Φ⇒Μ⇒Π",
+    "pi_network_coupling": "Πᵢₙₑₜ⇒Φ⇒Μ⇒Π"
     "runtime_guard": "χ(E₁,E₂)=Vₛ(τ(E₁,E₂))"
   },
   "centers": {
@@ -21,13 +25,23 @@
       "E₁": "0x2222222222222222222222222222222222222222",
       "E₂": "0x3333333333333333333333333333333333333333",
       "map": "τ(KMT2)=⟨E₁,E₂⟩",
+
+      <<<<<<< codex/update-kmt-exchange-to-version-2-8d1kl5
+      "guard": "χ(E₁,E₂)=1",
+      "estate_flow": "E₁⇒Π⇒κ⇒ΔCᵢₑ ∥ E₂⇒ι-monitor",
+      "ownership": "Pₑ"
       "guard": "χ(E₁,E₂)=1"
+
+      >>>>>>> master
     },
     "KMT2INV": {
       "variant": "ι∘π",
       "E₁": "0x3333333333333333333333333333333333333333",
       "E₂": "0x2222222222222222222222222222222222222222",
       "map": "τ(KMT2INV)=⟨E₁,E₂⟩",
+      "guard": "χ(E₁,E₂)=1",
+      "estate_flow": "E₁⇒Π⇒κ⇒ΔCᵢₑ ∥ E₂⇒ι-monitor",
+      "ownership": "Pₑ"
       "guard": "χ(E₁,E₂)=1"
     },
     "KMT2RM1000": {
@@ -35,6 +49,9 @@
       "E₁": "0x4444444444444444444444444444444444444444",
       "E₂": "0x2222222222222222222222222222222222222222",
       "map": "τ(KMT2RM1000)=⟨E₁,E₂⟩",
+      "guard": "χ(E₁,E₂)=1",
+      "estate_flow": "E₁⇒Π⇒κ⇒ΔCᵢₑ ∥ E₂⇒ι-monitor",
+      "ownership": "Pₑ"
       "guard": "χ(E₁,E₂)=1"
     }
   },
@@ -43,6 +60,23 @@
     "verification": "Vₛ=DatadogSynthetics",
     "verification_flow": "Vₛ(τ(E₁,E₂))=1",
     "synthetics_badge": "https://github.com/7ScriptsGL/Emtell/actions/workflows/datadog-synthetics.yml/badge.svg",
+    "synthetics_workflow": "https://github.com/7ScriptsGL/Emtell/actions/workflows/datadog-synthetics.yml",
+    "financial_pipeline": "tokenomics/emtellrp-financial-pipeline.json#/system/canonical_formula"
+    "financial_pipeline": "Ω=Π∘Μ∘Φ∘Ε∘Ι∘Χ",
+    "financial_pipeline_ref": "tokenomics/emtellrp-financial-pipeline.json",
+    "financial_pipeline_source": "https://github.com/7ScriptsGL/Financial-Analysis-Pipeline-with-ML-and-Portfolio-Construction-CodeBase.git",
+    "proprietary_domain": "Pₑ=EmtellRP_only",
+    "data_rights": "R(data_owner)=1",
+    "promotion_right": "π(R)=build⊕promote",
+    "integration_mode": "Ι=optional_external_connectors",
+    "integration_guard": "I(ext)=0∨1",
+    "integration_condition": "I(ext)=1 ⇒ Pₑ preserved",
+    "worldmonitor_source": "https://github.com/koala73/worldmonitor.git",
+    "worldmonitor_mode": "I(worldmonitor)=0∨1",
+    "worldmonitor_condition": "I(worldmonitor)=1 ⇒ Φ←Φ⊕Wₜ",
+    "pi_network_mode": "I(pi)=0∨1",
+    "pi_network_condition": "I(pi)=1 ⇒ Φ←Φ⊕Pᵢₜ",
+    "pi_network_scope": "Pᵢₜ=pi(feed_identity,feed_social,feed_settlement)"
     "synthetics_workflow": "https://github.com/7ScriptsGL/Emtell/actions/workflows/datadog-synthetics.yml"
   }
 }

@@ -1,0 +1,30 @@
+{
+  "version": "1.0.0",
+  "connectors": [
+    {
+      "id": "canonical-bridge-indexer",
+      "name": "Canonical Bridge Indexer",
+      "type": "bridge",
+      "auth": {
+        "model": "sigv4",
+        "credentialsRef": "vault://tokenomics/canonical-bridge-indexer"
+      },
+      "dataProvenance": {
+        "sourceSystem": "bridge-indexer-v2",
+        "collectedAt": "2026-01-01T00:00:00Z",
+        "attestationHash": "0x4511a7",
+        "ownershipGuaranteed": true
+      },
+      "ownership": {
+        "owner": "Optimism Governance",
+        "proofType": "registry",
+        "proofUri": "https://example.com/ownership/canonical-bridge-indexer"
+      },
+      "preservation": {
+        "integrityExtension": 1,
+        "rule": "I(ext)=1 ⇒ Pₑ preserved",
+        "preserved": true
+      }
+    }
+  ]
+}

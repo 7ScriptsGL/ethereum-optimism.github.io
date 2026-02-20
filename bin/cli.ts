@@ -5,9 +5,12 @@ import { Command } from 'commander'
 import { generate } from '../src/generate'
 import { runEmtellRuntime } from '../src/emtellrp'
 import { validate } from '../src/validate'
+import { ValidationMode, validate } from '../src/validate'
 import { version } from '../package.json'
 
 const program = new Command()
+
+const VALIDATION_MODES: ValidationMode[] = ['live', 'fixtures', 'auto']
 
 program
   .name('optl')
@@ -20,10 +23,28 @@ program
   .requiredOption('--datadir <datadir>', 'Directory containing data files')
   .option(
     '--tokens <tokens>',
-    'Comma-separated list of token symbols to validate'
+    'Comma-separated list of token symbols to validate',
+    ''
+  )
+  .option(
+    '--mode <mode>',
+    'Validation mode: live, fixtures, or auto',
+    'live'
   )
   .action(async (options) => {
-    const results = await validate(options.datadir, options.tokens.split(','))
+    const selectedTokens = options.tokens
+      ? options.tokens.split(',').filter((token: string) => token.length > 0)
+      : []
+
+    if (!VALIDATION_MODES.includes(options.mode)) {
+      throw new Error(
+        `Invalid --mode ${options.mode}. Expected one of: ${VALIDATION_MODES.join(', ')}`
+      )
+    }
+
+    const results = await validate(options.datadir, selectedTokens, {
+      mode: options.mode as ValidationMode,
+    })
 
     const validationResultsFilePath = 'validation_results.txt'
     const errs = results.filter((r) => r.type === 'error')
@@ -34,7 +55,7 @@ program
         validationResultsFilePath,
         `Below are the results from running validation for the token changes. To ` +
           `re-run the validation locally run: ` +
-          `pnpm validate --datadir ./data --tokens ${options.tokens}\n\n`
+          `pnpm validate --datadir ./data --tokens ${options.tokens || '<token>'} --mode ${options.mode}\n\n`
       )
     }
 

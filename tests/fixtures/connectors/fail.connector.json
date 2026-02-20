@@ -1,0 +1,30 @@
+{
+  "version": "1.0.0",
+  "connectors": [
+    {
+      "id": "bad-indexer",
+      "name": "Indexer Without Ownership Guarantee",
+      "type": "indexer",
+      "auth": {
+        "model": "apiKey",
+        "credentialsRef": "vault://integrations/indexer"
+      },
+      "dataProvenance": {
+        "sourceSystem": "indexer-service",
+        "collectedAt": "2026-01-10T12:30:00Z",
+        "attestationHash": "0xdeadbeef",
+        "ownershipGuaranteed": false
+      },
+      "ownership": {
+        "owner": "Unknown",
+        "proofType": "signature",
+        "proofUri": ""
+      },
+      "preservation": {
+        "integrityExtension": 1,
+        "rule": "I(ext)=1 ⇒ Pₑ preserved",
+        "preserved": false
+      }
+    }
+  ]
+}
